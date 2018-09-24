@@ -1,0 +1,20 @@
+<h2>Section title</h2>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Date/Time</th>
+        <th>Value 1</th>
+        <th>Value 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let value of values">
+        <td>{{value.timestamp}}</td>
+        <td>{{value.value1}}</td>
+        <td>{{value.value2}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
