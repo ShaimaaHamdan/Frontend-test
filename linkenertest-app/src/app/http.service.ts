@@ -9,6 +9,7 @@ import { Value } from './value';
 export class HttpService {
 
   private apiUrl = 'http://localhost:8080/';
+  
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -16,8 +17,13 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
 
-  getValues(): Observable<Value[]> {
-    const url = `${this.apiUrl}reading`
+  getValues(start:string,end:string): Observable<Value[]> {
+    const url = `${this.apiUrl}reading?start=${start}&end=${end}`
      return this.http.get<any>(url,this.httpOptions)
+  }
+
+  updateValues(row:Value) : Observable<any>  {
+    const url = `${this.apiUrl}reading`;
+    return this.http.put<any>(url,row,this.httpOptions) ;
   }
 }

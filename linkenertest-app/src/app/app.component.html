@@ -1,2 +1,2 @@
-<app-linkener-chart></app-linkener-chart>
-<app-linkener-data-table [values]="values"></app-linkener-data-table>
+<app-linkener-chart [values]="chartdata"></app-linkener-chart>
+<app-linkener-data-table [values]="pagedItems" [pager]="pager" (onPageClick)="setPage($event[0])" (onUpdateRow)="updateDataRow($event[0])"></app-linkener-data-table>

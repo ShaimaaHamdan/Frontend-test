@@ -1,20 +1,61 @@
-<h2>Section title</h2>
-<div class="table-responsive">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Date/Time</th>
-        <th>Value 1</th>
-        <th>Value 2</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let value of values">
-        <td>{{value.timestamp}}</td>
-        <td>{{value.value1}}</td>
-        <td>{{value.value2}}</td>
-      </tr>
-    </tbody>
+<div class="data-table">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Date/Time</th>
+              <th>Value 1</th>
+              <th>Value 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let value of values">
+              <td>{{value.timestamp}}</td>
+              <td *ngIf="value.id == editRowId">
+                <input type="text" [(ngModel)]="value.value1" (blur)="updateValue(value)">
+              </td>
+              <td *ngIf="value.id !== editRowId" (click)="toggle(value.id)">
+                <span>{{value.value1}}</span>
+              </td>
+              <td *ngIf="value.id == editRowId">
+                  <input type="text" [(ngModel)]="value.value2" (blur)="updateValue(value)">
+                </td>
+                <td *ngIf="value.id !== editRowId" (click)="toggle(value.id)">
+                  <span>{{value.value2}}</span>
+                </td>
+              
+            </tr>
+          </tbody>
 
-  </table>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  <div class="row pager">
+    <div class="col-12">
+      <nav aria-label="...">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+            <a (click)="pageWasClicked(1)" class="page-link">First</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+            <a (click)="pageWasClicked(pager.currentPage - 1)" class="page-link">Previous</a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+            <a (click)="pageWasClicked(page)" class="page-link">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+            <a (click)="pageWasClicked(pager.currentPage + 1)" class="page-link">Next</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+            <a (click)="pageWasClicked(pager.totalPages)" class="page-link">Last</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
 </div>

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Value } from '../value';
+import { PagerService } from '../pager.service';
 
 @Component({
   selector: 'app-linkener-data-table',
@@ -9,16 +10,35 @@ import { Value } from '../value';
 export class LinkenerDataTableComponent implements OnInit {
 
   @Input()
-  private values : Value[];
+  private values: Value[];
 
-  constructor() { 
-    console.log("data-table-component....");
-    console.log(this.values);
+  @Input()
+  private pager: any;
+
+  private editRowId: any;
+
+
+  @Output() onPageClick: EventEmitter<any> = new EventEmitter();
+  @Output() onUpdateRow: EventEmitter<any> = new EventEmitter();
+
+
+  constructor() {
   }
 
   ngOnInit() {
-    console.log(this.values);
-
   }
 
+  pageWasClicked(page: number): void {
+    this.onPageClick.emit([page]);
+  }
+
+  toggle(id) {
+    console.log(id);
+    this.editRowId = id;
+  }
+
+  updateValue(row: Value) {
+    this.editRowId = 0;
+    this.onUpdateRow.emit([row]);
+  }
 }
